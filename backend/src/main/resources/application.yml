@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: dineary-backend
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/dineary?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: dineary
+    password: local1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.dineary
+  configuration:
+    map-underscore-to-camel-case: true
