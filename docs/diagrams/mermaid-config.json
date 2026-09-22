@@ -1,0 +1,7 @@
+{
+  "theme": "neutral",
+  "fontFamily": "Apple SD Gothic Neo, Arial, sans-serif",
+  "flowchart": {
+    "htmlLabels": false
+  }
+}

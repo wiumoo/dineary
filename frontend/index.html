@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#185747">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Dineary — 나의 다음 한 끼</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="auth.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+  <header class="header shell">
+    <a class="brand" href="./" aria-label="Dineary 홈">Dineary<span>●</span></a>
+    <nav aria-label="주 메뉴">
+      <button class="nav-button active" data-view="explore" aria-current="page">발견하기</button>
+      <button class="nav-button" data-view="saved">저장한 곳 <span id="saved-count">0</span></button>
+      <button class="nav-button" data-view="mine">나의 기록</button>
+    </nav>
+    <div id="account-menu" class="account-menu" aria-label="회원 메뉴"></div>
+  </header>
+  <main id="main" class="shell">
+    <section class="intro">
+      <div><p class="intro-caption">한 끼의 발견, 취향의 기록</p><h1 id="page-title">오늘은 어디서 잘 먹을까요?</h1><p id="page-description">골목의 작은 식당부터, 다시 찾고 싶은 한 접시까지.</p></div>
+      <div class="intro-stamp" aria-hidden="true">좋은 식사의<br><strong>발견</strong><span>Dineary Seoul</span></div>
+    </section>
+    <section id="discovery" aria-label="음식점 탐색">
+      <form id="search-form" class="search-bar" role="search">
+        <label class="region-label"><span>동네</span><select id="region" aria-label="동네 선택"><option value="">서울 전체</option><option>성수</option><option>연남</option><option>을지로</option></select></label>
+        <label class="search-label"><span aria-hidden="true">⌕</span><input id="query" type="search" placeholder="가게, 메뉴, 동네를 검색해 보세요" aria-label="가게, 메뉴, 동네 검색"></label>
+        <button class="primary" type="submit">검색</button>
+      </form>
+      <div class="filter-row"><div id="categories" class="chips" role="group" aria-label="음식 종류"><button class="chip selected" data-category="전체" aria-pressed="true">전체</button><button class="chip" data-category="한식" aria-pressed="false">한식</button><button class="chip" data-category="일식" aria-pressed="false">일식</button><button class="chip" data-category="양식" aria-pressed="false">양식</button><button class="chip" data-category="카페" aria-pressed="false">카페·디저트</button></div><label class="open-filter"><input id="solo" type="checkbox"> 혼밥하기 좋은 곳</label></div>
+      <div class="browse-layout">
+        <section class="results" aria-label="검색 결과"><div class="section-heading"><h2 id="results-heading">취향에 맞는 한 곳 <span id="result-count"></span></h2><label><span class="sr-only">정렬</span><select id="sort"><option value="recommended">추천순</option><option value="rating">평점 높은 순</option><option value="price">가격 낮은 순</option><option value="reviews">리뷰 많은 순</option></select></label></div><div id="restaurant-list" class="restaurant-grid" aria-live="polite"></div></section>
+        <aside class="map-panel"><div class="section-heading"><h2>동네에서 발견하기</h2><span class="subtle">예시 지도</span></div><div id="map" class="map" role="group" aria-label="샘플 음식점 위치도"><div class="park park-one"></div><div class="park park-two"></div><div class="river"></div><div class="street street-one"></div><div class="street street-two"></div><div class="street street-three"></div><span class="map-area area-one">연남</span><span class="map-area area-two">을지로</span><span class="map-area area-three">성수</span><span class="river-label">한강</span><div id="map-pins"></div><span class="map-note">실제 위치·축척과 다른 예시입니다</span></div><div class="map-bottom"><span class="small-symbol">⌖</span><div><strong>멀리 가지 않아도, 좋은 한 끼.</strong><p>가격 표시를 누르면 가게를 볼 수 있어요.</p></div></div><div class="notebook-note"><span>나만의 맛집 노트</span><p>마음에 드는 곳은 저장해 두세요.<br>다음 약속이 조금 더 쉬워질 거예요.</p></div></aside>
+      </div>
+    </section>
+    <section id="my-records" hidden aria-label="나의 기록"></section>
+  </main>
+  <footer class="shell footer"><span class="brand footer-brand">Dineary<span>●</span></span><p>맛있는 순간을 모으는 곳.</p><span>가상의 음식점 · 이 브라우저에만 저장됩니다</span></footer>
+  <dialog id="detail-dialog" aria-labelledby="detail-title"><button id="close-dialog" class="close-button" aria-label="상세 닫기">×</button><div id="detail-content"></div></dialog>
+  <dialog id="auth-dialog" aria-labelledby="auth-title" aria-describedby="auth-description">
+    <button id="close-auth" class="close-button" aria-label="회원 화면 닫기">×</button>
+    <div class="auth-body">
+      <span class="brand auth-brand">Dineary<span>●</span></span>
+      <h2 id="auth-title">다시 만나 반가워요</h2>
+      <p id="auth-description">로그인하고 나만의 맛집 기록을 이어가세요.</p>
+      <form id="auth-form">
+        <label id="nickname-field" class="form-field" hidden>닉네임<input name="nickname" autocomplete="nickname" minlength="2" maxlength="20" disabled></label>
+        <label class="form-field">이메일<input name="email" type="email" autocomplete="username" maxlength="254" required></label>
+        <label class="form-field">비밀번호<input name="password" type="password" autocomplete="current-password" maxlength="128" required></label>
+        <label id="confirm-field" class="form-field" hidden>비밀번호 확인<input name="confirm" type="password" autocomplete="new-password" maxlength="128" disabled></label>
+        <p id="auth-error" class="auth-error" role="alert"></p>
+        <button id="auth-submit" class="primary" type="submit">로그인</button>
+      </form>
+      <p class="auth-switch"><span id="auth-switch-label">아직 계정이 없나요?</span> <button id="auth-switch" class="text-button" type="button">회원가입</button></p>
+      <p class="auth-notice">이 브라우저에서만 사용하는 체험용 계정입니다.<br>실제 서비스에서 사용하는 비밀번호는 입력하지 마세요.</p>
+    </div>
+  </dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
